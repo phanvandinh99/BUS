@@ -211,6 +211,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
+    <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\HocSinh\HocSinhAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -233,6 +235,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\Auth\Views\Shared\" />
     <Folder Include="Areas\HocSinh\Controllers\" />
     <Folder Include="Areas\HocSinh\Views\Shared\" />
     <Folder Include="Assets\" />
@@ -240,6 +243,8 @@
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\HocSinh\Views\web.config" />
+    <Content Include="Areas\Auth\Views\web.config" />
+    <Content Include="Areas\Auth\Views\Account\Login.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
