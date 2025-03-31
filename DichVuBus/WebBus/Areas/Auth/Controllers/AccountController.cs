@@ -10,10 +10,21 @@ namespace WebBus.Areas.Auth.Controllers
 
         public ActionResult Login()
         {
-            var hocSinh = _context.HocSinh.Find(_ => true).ToList();
-
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Login(string username, string password)
+        {
+            var user = _context.Users.Find(u => u.username == username && u.password == password).FirstOrDefault();
+            if (user?.role == "Admin")
+            {
+                Session["UserId"] = user.Id.ToString();
+                Session["Role"] = user.role;
+                return RedirectToAction("Index");
+            }
+            ViewBag.Error = "Sai thông tin đăng nhập!";
+            return View();
+        }
     }
 }
