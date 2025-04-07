@@ -211,6 +211,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HocSinhController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
@@ -223,6 +224,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Admin\css\app.css" />
+    <Content Include="Assets\Admin\css\vendor.css" />
+    <Content Include="Assets\Admin\HinhAnh\icon.png" />
+    <Content Include="Assets\Admin\js\app.js" />
+    <Content Include="Assets\Admin\js\vendor.js" />
     <Content Include="Assets\Auth\css\style.css" />
     <Content Include="Assets\Auth\fonts\material-icon\css\material-design-iconic-font.css" />
     <Content Include="Assets\Auth\fonts\material-icon\css\material-design-iconic-font.min.css" />
@@ -257,8 +263,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\Home\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Auth\Views\Shared\" />
     <Folder Include="Areas\HocSinh\Controllers\" />
     <Folder Include="Areas\HocSinh\Views\Shared\" />
@@ -336,6 +340,9 @@
     <Content Include="Assets\Auth\fonts\poppins\roboto-condensed-v16-latin-regular.ttf" />
     <Content Include="Assets\Auth\fonts\poppins\roboto-condensed-v16-latin-regular.woff" />
     <Content Include="Assets\Auth\fonts\poppins\roboto-condensed-v16-latin-regular.woff2" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\HocSinh\Index.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>
