@@ -1,0 +1,29 @@
+﻿@model WebBus.Models.HocSinh
+
+@{
+    ViewBag.Title = "Cập nhật Học Sinh";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Cập nhật Học Sinh</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        <label>Họ Tên</label>
+        @Html.TextBoxFor(m => m.hoTen, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Lớp</label>
+        @Html.TextBoxFor(m => m.lop, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Tuyến Đường</label>
+        @Html.DropDownListFor(m => m.tuyenDuongId, new SelectList(ViewBag.TuyenDuongList, "Id", "TenTuyen"), "Chọn tuyến đường", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Tài Khoản</label>
+        @Html.TextBoxFor(m => m.userId, new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+}

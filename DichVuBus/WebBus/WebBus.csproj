@@ -221,6 +221,7 @@
     </Compile>
     <Compile Include="Models\Models.cs" />
     <Compile Include="Models\MongoDBContext.cs" />
+    <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +344,10 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\HocSinh\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HocSinh\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\HocSinh\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HocSinh\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\HocSinh\Delete.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

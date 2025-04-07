@@ -1,0 +1,26 @@
+﻿@model WebBus.Models.HocSinh
+
+@{
+    ViewBag.Title = "Xóa Học Sinh";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Xóa Học Sinh</h2>
+<h3>Bạn có chắc muốn xóa?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Họ và Tên</dt>
+        <dd>@Model.hoTen</dd>
+        <dt>Lớp</dt>
+        <dd>@Model.lop</dd>
+        <dt>Tuyến Đường</dt>
+        <dd>@Model.tuyenDuongId</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(m => m.Id)
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Hủy</a>
+    }
+</div>
