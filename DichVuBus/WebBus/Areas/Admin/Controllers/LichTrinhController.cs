@@ -7,32 +7,31 @@ using static WebBus.Models.ViewModels;
 
 namespace WebBus.Areas.Admin.Controllers
 {
-    public class HocSinhController : Controller
+    public class LichTrinhController : Controller
     {
         private readonly MongoDBContext _context = new MongoDBContext();
 
-        #region Hiển thị danh sách học sinh (với phân trang)
+        #region Hiển thị danh sách lịch trình (với phân trang)
         public ActionResult Index(int page = 1, int pageSize = 5)
         {
-            var totalRecords = _context.HocSinh.Find(_ => true).CountDocuments();
-            var hocSinhList = _context.HocSinh
+            var totalRecords = _context.LichTrinh.Find(_ => true).CountDocuments();
+            var lichTrinhList = _context.LichTrinh
                 .Find(_ => true)
                 .Skip((page - 1) * pageSize)
                 .Limit(pageSize)
                 .ToList();
 
-            // Join với TuyenDuong để lấy TenTuyen
+            // Join với TuyenDuong để lấy tenTuyen
             var tuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            var hocSinhViewModel = hocSinhList.Select(h => new HocSinhViewModel
+            var lichTrinhViewModel = lichTrinhList.Select(l => new LichTrinhViewModel
             {
-                Id = h.Id,
-                userId = h.userId,
-                hoTen = h.hoTen,
-                lop = h.lop,
-                tuyenDuongId = h.tuyenDuongId,
-                tenTuyenDuong = string.IsNullOrEmpty(h.tuyenDuongId) || !ObjectId.TryParse(h.tuyenDuongId, out ObjectId tuyenId)
-                                ? "Không xác định"
-                                : tuyenDuongList.FirstOrDefault(t => t.Id == tuyenId)?.tenTuyen ?? "Không xác định"
+                Id = l.Id,
+                tuyenDuongId = l.tuyenDuongId,
+                tenTuyenDuong = string.IsNullOrEmpty(l.tuyenDuongId) || !ObjectId.TryParse(l.tuyenDuongId, out ObjectId tuyenId)
+                    ? "Không xác định"
+                    : tuyenDuongList.FirstOrDefault(t => t.Id == tuyenId)?.tenTuyen ?? "Không xác định",
+                thoiGian = l.thoiGian,
+                ngay = l.ngay
             }).ToList();
 
             ViewBag.TotalRecords = totalRecords;
@@ -40,11 +39,11 @@ namespace WebBus.Areas.Admin.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)System.Math.Ceiling((double)totalRecords / pageSize);
 
-            return View(hocSinhViewModel);
+            return View(lichTrinhViewModel);
         }
         #endregion
 
-        #region Thêm mới học sinh
+        #region Thêm mới lịch trình
         public ActionResult Create()
         {
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
@@ -52,67 +51,67 @@ namespace WebBus.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(WebBus.Models.HocSinh hocSinh)
+        public ActionResult Create(LichTrinh lichTrinh)
         {
             if (ModelState.IsValid)
             {
-                _context.HocSinh.InsertOne(hocSinh);
+                _context.LichTrinh.InsertOne(lichTrinh);
                 return RedirectToAction("Index");
             }
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            return View(hocSinh);
+            return View(lichTrinh);
         }
         #endregion
 
-        #region Cập nhật học sinh
+        #region Cập nhật lịch trình
         public ActionResult Edit(string id)
         {
-            var hocSinh = _context.HocSinh.Find(h => h.Id == new ObjectId(id)).FirstOrDefault();
-            if (hocSinh == null) return HttpNotFound();
+            var lichTrinh = _context.LichTrinh.Find(l => l.Id == new ObjectId(id)).FirstOrDefault();
+            if (lichTrinh == null) return HttpNotFound();
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            return View(hocSinh);
+            return View(lichTrinh);
         }
 
         [HttpPost]
-        public ActionResult Edit(WebBus.Models.HocSinh hocSinh)
+        public ActionResult Edit(LichTrinh lichTrinh)
         {
             if (ModelState.IsValid)
             {
-                _context.HocSinh.ReplaceOne(h => h.Id == hocSinh.Id, hocSinh);
+                _context.LichTrinh.ReplaceOne(l => l.Id == lichTrinh.Id, lichTrinh);
                 return RedirectToAction("Index");
             }
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            return View(hocSinh);
+            return View(lichTrinh);
         }
         #endregion
 
-        #region Xem chi tiết học sinh (hiển thị tên tuyến đường)
+        #region Xem chi tiết lịch trình
         public ActionResult Details(string id)
         {
-            var hocSinh = _context.HocSinh.Find(h => h.Id == new ObjectId(id)).FirstOrDefault();
-            if (hocSinh == null) return HttpNotFound();
+            var lichTrinh = _context.LichTrinh.Find(l => l.Id == new ObjectId(id)).FirstOrDefault();
+            if (lichTrinh == null) return HttpNotFound();
 
             var tuyenDuong = _context.TuyenDuong
-                .Find(t => t.Id == new ObjectId(hocSinh.tuyenDuongId))
+                .Find(t => t.Id == new ObjectId(lichTrinh.tuyenDuongId))
                 .FirstOrDefault();
 
             ViewBag.TenTuyenDuong = tuyenDuong?.tenTuyen ?? "Không xác định";
-            return View(hocSinh);
+            return View(lichTrinh);
         }
         #endregion
 
-        #region Xóa học sinh
+        #region Xóa lịch trình
         public ActionResult Delete(string id)
         {
-            var hocSinh = _context.HocSinh.Find(h => h.Id == new ObjectId(id)).FirstOrDefault();
-            if (hocSinh == null) return HttpNotFound();
-            return View(hocSinh);
+            var lichTrinh = _context.LichTrinh.Find(l => l.Id == new ObjectId(id)).FirstOrDefault();
+            if (lichTrinh == null) return HttpNotFound();
+            return View(lichTrinh);
         }
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)
         {
-            _context.HocSinh.DeleteOne(h => h.Id == new ObjectId(id));
+            _context.LichTrinh.DeleteOne(l => l.Id == new ObjectId(id));
             return RedirectToAction("Index");
         }
         #endregion

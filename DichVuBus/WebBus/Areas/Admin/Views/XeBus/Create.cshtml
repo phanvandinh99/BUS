@@ -1,0 +1,20 @@
+﻿@model WebBus.Models.XeBus
+
+@{
+    ViewBag.Title = "Thêm Xe Buýt";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm Xe Buýt</h2>
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.bienSo, "Biển Số")
+        @Html.TextBoxFor(m => m.bienSo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.trangThai, "Trạng Thái")
+        @Html.DropDownListFor(m => m.trangThai, new SelectList(new[] { "Đang hoạt động", "Bảo trì", "Ngừng hoạt động" }), "Chọn trạng thái", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm</button>
+}

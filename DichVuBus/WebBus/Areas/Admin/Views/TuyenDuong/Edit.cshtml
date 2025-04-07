@@ -1,0 +1,21 @@
+﻿@model WebBus.Models.TuyenDuong
+
+@{
+    ViewBag.Title = "Cập nhật Tuyến Đường";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Cập nhật Tuyến Đường</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+    <div class="form-group">
+        @Html.LabelFor(m => m.tenTuyen, "Tên Tuyến")
+        @Html.TextBoxFor(m => m.tenTuyen, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.xeBusId, "Xe Buýt")
+        @Html.DropDownListFor(m => m.xeBusId, new SelectList(ViewBag.XeBusList, "Id", "bienSo"), "Chọn xe buýt", new { @class = "form-control" })
+    </div>
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+}

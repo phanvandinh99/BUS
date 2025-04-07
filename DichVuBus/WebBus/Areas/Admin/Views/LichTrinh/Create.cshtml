@@ -1,0 +1,24 @@
+﻿@model WebBus.Models.LichTrinh
+
+@{
+    ViewBag.Title = "Thêm Lịch Trình";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Thêm Lịch Trình</h2>
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.tuyenDuongId, "Tuyến Đường")
+        @Html.DropDownListFor(m => m.tuyenDuongId, new SelectList(ViewBag.TuyenDuongList, "Id", "tenTuyen"), "Chọn tuyến đường", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.thoiGian, "Thời Gian")
+        @Html.TextBoxFor(m => m.thoiGian, new { @class = "form-control", @placeholder = "VD: 07:00" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ngay, "Ngày")
+        @Html.TextBoxFor(m => m.ngay, new { @class = "form-control", @type = "date" })
+    </div>
+    <button type="submit" class="btn btn-primary">Thêm</button>
+}

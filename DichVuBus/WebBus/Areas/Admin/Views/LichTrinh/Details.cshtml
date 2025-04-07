@@ -1,0 +1,19 @@
+﻿@model WebBus.Models.LichTrinh
+
+@{
+    ViewBag.Title = "Chi tiết Lịch Trình";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết Lịch Trình</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Tuyến Đường</dt>
+        <dd>@ViewBag.TenTuyenDuong</dd>
+        <dt>Thời Gian</dt>
+        <dd>@Model.thoiGian</dd>
+        <dt>Ngày</dt>
+        <dd>@Model.ngay</dd>
+    </dl>
+</div>
+<a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>

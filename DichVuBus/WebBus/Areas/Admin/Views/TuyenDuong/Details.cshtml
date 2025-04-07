@@ -1,0 +1,17 @@
+﻿@model WebBus.Models.TuyenDuong
+
+@{
+    ViewBag.Title = "Chi tiết Tuyến Đường";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết Tuyến Đường</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Tên Tuyến</dt>
+        <dd>@Model.tenTuyen</dd>
+        <dt>Xe Buýt</dt>
+        <dd>@ViewBag.BienSoXe</dd>
+    </dl>
+</div>
+<a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>

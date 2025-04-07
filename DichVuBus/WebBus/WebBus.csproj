@@ -213,6 +213,9 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HocSinhController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LichTrinhController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TuyenDuongController.cs" />
+    <Compile Include="Areas\Admin\Controllers\XeBusController.cs" />
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\HocSinh\HocSinhAreaRegistration.cs" />
@@ -348,6 +351,21 @@
     <Content Include="Areas\Admin\Views\HocSinh\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\HocSinh\Details.cshtml" />
     <Content Include="Areas\Admin\Views\HocSinh\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\XeBus\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\XeBus\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\XeBus\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\XeBus\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\XeBus\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\TuyenDuong\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TuyenDuong\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TuyenDuong\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TuyenDuong\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\TuyenDuong\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\LichTrinh\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LichTrinh\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\LichTrinh\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LichTrinh\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\LichTrinh\Delete.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

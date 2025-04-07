@@ -17,5 +17,21 @@ namespace WebBus.Models
             public string tuyenDuongId { get; set; }
             public string tenTuyenDuong { get; set; }
         }
+        public class TuyenDuongViewModel
+        {
+            public ObjectId Id { get; set; }
+            public string tenTuyen { get; set; }
+            public string xeBusId { get; set; }
+            public string bienSoXe { get; set; }
+        }
+
+        public class LichTrinhViewModel
+        {
+            public ObjectId Id { get; set; }
+            public string tuyenDuongId { get; set; }
+            public string tenTuyenDuong { get; set; }
+            public string thoiGian { get; set; }
+            public string ngay { get; set; }
+        }
     }
 }
