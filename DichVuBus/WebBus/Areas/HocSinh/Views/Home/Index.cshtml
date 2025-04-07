@@ -259,6 +259,47 @@
             </div>
         </section>
         <!--course-section end-->
+        <!-- Danh sách tuyến đường -->
+        <section class="tuyen-duong-section">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Danh Sách Tuyến Đường</h2>
+                    <p>Các tuyến đường hiện có trong hệ thống</p>
+                </div>
+                <div class="row">
+                    @foreach (var tuyen in ViewBag.TuyenDuongList)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="tuyen-duong-card wow fadeInUp" data-wow-duration="1000ms">
+                                <h3>@tuyen.tenTuyen</h3>
+                                <p>Xe Buýt: @tuyen.BienSoXe</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+
+        <section class="xe-bus-section">
+            <div class="container">
+                <div class="section-title text-center">
+                    <h2>Danh Sách Xe Buýt</h2>
+                    <p>Các xe buýt hiện có trong hệ thống</p>
+                </div>
+                <div class="row">
+                    @foreach (var xe in ViewBag.XeBusList)
+                    {
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="xe-bus-card wow fadeInUp" data-wow-duration="1000ms">
+                                <h3>@xe.bienSo</h3>
+                                <p>Trạng Thái: @xe.trangThai</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+
         <footer>
             <div class="container">
                 <div class="top-footer">
@@ -266,7 +307,7 @@
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <div class="widget widget-about">
                                 <img src="~/Assets/HocSinh/img/logo.png" alt="">
-                                <p>Website mục đích để truyền đạt thông tin, tra cứu thông tin với học sinh Tiểu Học nhằm đăng kí các nguyện vọng vào các trường THPT tỉnh Lạng Giang</p>
+                                <p>Website mục đích để cung cấp thông tin dịch vụ Bus dành cho học sinh sinh viên, thuân tiện cho việc đến trường</p>
                             </div>
                             <!--widget-about end-->
                         </div>

@@ -21,8 +21,13 @@ namespace WebBus.Areas.Auth.Controllers
             {
                 Session["UserId"] = user.Id.ToString();
                 Session["Role"] = user.role;
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
             }
+            else if (user?.role == "HocSinh")
+            {
+                return RedirectToAction("Index", "Home", new { area = "HocSinh" });
+            }
+
             ViewBag.Error = "Sai thông tin đăng nhập!";
             return View();
         }
