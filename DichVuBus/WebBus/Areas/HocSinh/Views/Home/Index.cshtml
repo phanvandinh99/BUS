@@ -271,6 +271,7 @@
         </section>
         <!--course-section end-->
         <!-- Danh sách tuyến đường -->
+        <!-- Danh sách tuyến đường -->
         <section class="tuyen-duong-section">
             <div class="container">
                 <div class="section-title text-center">
@@ -278,6 +279,34 @@
                     <p>Các tuyến đường hiện có trong hệ thống</p>
                 </div>
                 <div class="row">
+                    @if (Session["HocSinh"] != null)
+                    {
+                        var user = (WebBus.Models.User)Session["HocSinh"];
+                        <!-- Form chọn tuyến đường để tham gia -->
+                        using (Html.BeginForm("ThamGiaTuyenDuong", "Home", new { area = "HocSinh" }, FormMethod.Post, new { @class = "form-tham-gia" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <label for="tuyenDuongId">Chọn tuyến đường để tham gia:</label>
+                                <select name="tuyenDuongId" class="form-control">
+                                    <option value="">-- Chọn tuyến đường --</option>
+                                    @foreach (var tuyen in ViewBag.TuyenDuongList)
+                                    {
+                                        <option value="@tuyen.Id">@tuyen.tenTuyen</option>
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success">Tham Gia</button>
+                        }
+                    }
+                    else
+                    {
+                        <p>Vui lòng <a href="/Auth/Account/Login">đăng nhập</a> để tham gia tuyến đường.</p>
+                    }
+                </div>
+                <hr />
+                <div class="row">
+                    <!-- Danh sách tuyến đường -->
                     @foreach (var tuyen in ViewBag.TuyenDuongList)
                     {
                         <div class="col-lg-4 col-md-6 col-sm-6">
@@ -290,6 +319,7 @@
                 </div>
             </div>
         </section>
+        <br />
 
         <section class="xe-bus-section">
             <div class="container">
