@@ -1,0 +1,18 @@
+﻿@model WebBus.Models.User
+
+@{
+    ViewBag.Title = "Chi tiết User";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết User</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt>Tài Khoản</dt>
+        <dd>@Model.username</dd>
+
+        <dt>Quyền</dt>
+        <dd>@Model.role</dd>
+    </dl>
+</div>
+<a href="@Url.Action("Index")" class="btn btn-secondary">Quay lại</a>

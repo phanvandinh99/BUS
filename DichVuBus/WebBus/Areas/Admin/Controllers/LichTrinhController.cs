@@ -27,9 +27,8 @@ namespace WebBus.Areas.Admin.Controllers
             {
                 Id = l.Id,
                 tuyenDuongId = l.tuyenDuongId,
-                tenTuyenDuong = string.IsNullOrEmpty(l.tuyenDuongId) || !ObjectId.TryParse(l.tuyenDuongId, out ObjectId tuyenId)
-                    ? "Không xác định"
-                    : tuyenDuongList.FirstOrDefault(t => t.Id == tuyenId)?.tenTuyen ?? "Không xác định",
+                tenTuyenDuong = string.IsNullOrEmpty(l.tuyenDuongId) ? "Không xác định"
+                                                    : tuyenDuongList.FirstOrDefault(t => t.Id == l.tuyenDuongId)?.tenTuyen ?? "Không xác định",
                 thoiGian = l.thoiGian,
                 ngay = l.ngay
             }).ToList();
@@ -66,7 +65,7 @@ namespace WebBus.Areas.Admin.Controllers
         #region Cập nhật lịch trình
         public ActionResult Edit(string id)
         {
-            var lichTrinh = _context.LichTrinh.Find(l => l.Id == new ObjectId(id)).FirstOrDefault();
+            var lichTrinh = _context.LichTrinh.Find(l => l.Id == id).FirstOrDefault();
             if (lichTrinh == null) return HttpNotFound();
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
             return View(lichTrinh);
@@ -88,11 +87,11 @@ namespace WebBus.Areas.Admin.Controllers
         #region Xem chi tiết lịch trình
         public ActionResult Details(string id)
         {
-            var lichTrinh = _context.LichTrinh.Find(l => l.Id == new ObjectId(id)).FirstOrDefault();
+            var lichTrinh = _context.LichTrinh.Find(l => l.Id == id).FirstOrDefault();
             if (lichTrinh == null) return HttpNotFound();
 
             var tuyenDuong = _context.TuyenDuong
-                .Find(t => t.Id == new ObjectId(lichTrinh.tuyenDuongId))
+                .Find(t => t.Id == lichTrinh.tuyenDuongId)
                 .FirstOrDefault();
 
             ViewBag.TenTuyenDuong = tuyenDuong?.tenTuyen ?? "Không xác định";
@@ -103,7 +102,7 @@ namespace WebBus.Areas.Admin.Controllers
         #region Xóa lịch trình
         public ActionResult Delete(string id)
         {
-            var lichTrinh = _context.LichTrinh.Find(l => l.Id == new ObjectId(id)).FirstOrDefault();
+            var lichTrinh = _context.LichTrinh.Find(l => l.Id == id).FirstOrDefault();
             if (lichTrinh == null) return HttpNotFound();
             return View(lichTrinh);
         }
@@ -111,7 +110,7 @@ namespace WebBus.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)
         {
-            _context.LichTrinh.DeleteOne(l => l.Id == new ObjectId(id));
+            _context.LichTrinh.DeleteOne(l => l.Id == id);
             return RedirectToAction("Index");
         }
         #endregion

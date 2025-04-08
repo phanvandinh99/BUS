@@ -21,9 +21,8 @@ namespace WebBus.Areas.HocSinh.Controllers
             var tuyenDuongViewModel = tuyenDuongList.Select(t => new TuyenDuongViewModel
             {
                 tenTuyen = t.tenTuyen,
-                bienSoXe = string.IsNullOrEmpty(t.xeBusId) || !ObjectId.TryParse(t.xeBusId, out ObjectId xeBusId)
-                    ? "Không xác định"
-                    : xeBusList.FirstOrDefault(x => x.Id == xeBusId)?.bienSo ?? "Không xác định"
+                bienSoXe = string.IsNullOrEmpty(t.xeBusId) ? "Không xác định"
+                    : xeBusList.FirstOrDefault(x => x.Id == t.xeBusId)?.bienSo ?? "Không xác định"
             }).ToList();
 
             ViewBag.TuyenDuongList = tuyenDuongViewModel;

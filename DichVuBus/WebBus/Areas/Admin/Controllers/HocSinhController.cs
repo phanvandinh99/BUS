@@ -30,9 +30,8 @@ namespace WebBus.Areas.Admin.Controllers
                 hoTen = h.hoTen,
                 lop = h.lop,
                 tuyenDuongId = h.tuyenDuongId,
-                tenTuyenDuong = string.IsNullOrEmpty(h.tuyenDuongId) || !ObjectId.TryParse(h.tuyenDuongId, out ObjectId tuyenId)
-                                ? "Không xác định"
-                                : tuyenDuongList.FirstOrDefault(t => t.Id == tuyenId)?.tenTuyen ?? "Không xác định"
+                tenTuyenDuong = string.IsNullOrEmpty(h.tuyenDuongId) ? "Không xác định"
+                                : tuyenDuongList.FirstOrDefault(t => t.Id == h.tuyenDuongId)?.tenTuyen ?? "Không xác định"
             }).ToList();
 
             ViewBag.TotalRecords = totalRecords;
@@ -67,7 +66,7 @@ namespace WebBus.Areas.Admin.Controllers
         #region Cập nhật học sinh
         public ActionResult Edit(string id)
         {
-            var hocSinh = _context.HocSinh.Find(h => h.Id == new ObjectId(id)).FirstOrDefault();
+            var hocSinh = _context.HocSinh.Find(h => h.Id == id).FirstOrDefault();
             if (hocSinh == null) return HttpNotFound();
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
             return View(hocSinh);
@@ -89,11 +88,11 @@ namespace WebBus.Areas.Admin.Controllers
         #region Xem chi tiết học sinh (hiển thị tên tuyến đường)
         public ActionResult Details(string id)
         {
-            var hocSinh = _context.HocSinh.Find(h => h.Id == new ObjectId(id)).FirstOrDefault();
+            var hocSinh = _context.HocSinh.Find(h => h.Id == id).FirstOrDefault();
             if (hocSinh == null) return HttpNotFound();
 
             var tuyenDuong = _context.TuyenDuong
-                .Find(t => t.Id == new ObjectId(hocSinh.tuyenDuongId))
+                .Find(t => t.Id == hocSinh.tuyenDuongId)
                 .FirstOrDefault();
 
             ViewBag.TenTuyenDuong = tuyenDuong?.tenTuyen ?? "Không xác định";
@@ -104,7 +103,7 @@ namespace WebBus.Areas.Admin.Controllers
         #region Xóa học sinh
         public ActionResult Delete(string id)
         {
-            var hocSinh = _context.HocSinh.Find(h => h.Id == new ObjectId(id)).FirstOrDefault();
+            var hocSinh = _context.HocSinh.Find(h => h.Id == id).FirstOrDefault();
             if (hocSinh == null) return HttpNotFound();
             return View(hocSinh);
         }
@@ -112,7 +111,7 @@ namespace WebBus.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)
         {
-            _context.HocSinh.DeleteOne(h => h.Id == new ObjectId(id));
+            _context.HocSinh.DeleteOne(h => h.Id == id);
             return RedirectToAction("Index");
         }
         #endregion

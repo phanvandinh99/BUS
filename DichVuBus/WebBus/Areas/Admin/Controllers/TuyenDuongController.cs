@@ -29,9 +29,8 @@ namespace WebBus.Areas.Admin.Controllers
                 Id = t.Id,
                 tenTuyen = t.tenTuyen,
                 xeBusId = t.xeBusId,
-                bienSoXe = string.IsNullOrEmpty(t.xeBusId) || !ObjectId.TryParse(t.xeBusId, out ObjectId xeBusId)
-                    ? "Không xác định"
-                    : xeBusList.FirstOrDefault(x => x.Id == xeBusId)?.bienSo ?? "Không xác định"
+                bienSoXe = string.IsNullOrEmpty(t.xeBusId) ? "Không xác định"
+                    : xeBusList.FirstOrDefault(x => x.Id == t.xeBusId)?.bienSo ?? "Không xác định"
             }).ToList();
 
             ViewBag.TotalRecords = totalRecords;
@@ -66,7 +65,7 @@ namespace WebBus.Areas.Admin.Controllers
         #region Cập nhật tuyến đường
         public ActionResult Edit(string id)
         {
-            var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == new ObjectId(id)).FirstOrDefault();
+            var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == id).FirstOrDefault();
             if (tuyenDuong == null) return HttpNotFound();
             ViewBag.XeBusList = _context.XeBus.Find(_ => true).ToList();
             return View(tuyenDuong);
@@ -88,11 +87,11 @@ namespace WebBus.Areas.Admin.Controllers
         #region Xem chi tiết tuyến đường
         public ActionResult Details(string id)
         {
-            var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == new ObjectId(id)).FirstOrDefault();
+            var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == id).FirstOrDefault();
             if (tuyenDuong == null) return HttpNotFound();
 
             var xeBus = _context.XeBus
-                .Find(x => x.Id == new ObjectId(tuyenDuong.xeBusId))
+                .Find(x => x.Id == tuyenDuong.xeBusId)
                 .FirstOrDefault();
 
             ViewBag.BienSoXe = xeBus?.bienSo ?? "Không xác định";
@@ -103,7 +102,7 @@ namespace WebBus.Areas.Admin.Controllers
         #region Xóa tuyến đường
         public ActionResult Delete(string id)
         {
-            var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == new ObjectId(id)).FirstOrDefault();
+            var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == id).FirstOrDefault();
             if (tuyenDuong == null) return HttpNotFound();
             return View(tuyenDuong);
         }
@@ -111,7 +110,7 @@ namespace WebBus.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string id)
         {
-            _context.TuyenDuong.DeleteOne(t => t.Id == new ObjectId(id));
+            _context.TuyenDuong.DeleteOne(t => t.Id == id);
             return RedirectToAction("Index");
         }
         #endregion

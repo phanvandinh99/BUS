@@ -10,7 +10,7 @@ namespace WebBus.Models
     {
         public class HocSinhViewModel
         {
-            public ObjectId Id { get; set; }
+            public string Id { get; set; }
             public string userId { get; set; }
             public string hoTen { get; set; }
             public string lop { get; set; }
@@ -19,7 +19,7 @@ namespace WebBus.Models
         }
         public class TuyenDuongViewModel
         {
-            public ObjectId Id { get; set; }
+            public string Id { get; set; }
             public string tenTuyen { get; set; }
             public string xeBusId { get; set; }
             public string bienSoXe { get; set; }
@@ -27,7 +27,7 @@ namespace WebBus.Models
 
         public class LichTrinhViewModel
         {
-            public ObjectId Id { get; set; }
+            public string Id { get; set; }
             public string tuyenDuongId { get; set; }
             public string tenTuyenDuong { get; set; }
             public string thoiGian { get; set; }
