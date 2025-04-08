@@ -220,6 +220,8 @@
     <Compile Include="Areas\Auth\AuthAreaRegistration.cs" />
     <Compile Include="Areas\Auth\Controllers\AccountController.cs" />
     <Compile Include="Areas\HocSinh\Controllers\HomeController.cs" />
+    <Compile Include="Areas\HocSinh\Controllers\LichTrinhController.cs" />
+    <Compile Include="Areas\HocSinh\Controllers\XeBusController.cs" />
     <Compile Include="Areas\HocSinh\HocSinhAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -414,6 +416,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Auth\Views\Shared\" />
+    <Folder Include="Areas\HocSinh\Views\XeBus\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\web.config" />
@@ -532,6 +535,7 @@
     <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\User\Details.cshtml" />
     <Content Include="Areas\Admin\Views\User\Delete.cshtml" />
+    <Content Include="Areas\HocSinh\Views\LichTrinh\LichTrinhCuaBan.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup>

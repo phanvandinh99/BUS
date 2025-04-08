@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WebBus.Models.ViewModels.UserLichTrinhViewModel>
+
+@{
+    ViewBag.Title = "Lịch Trình Của Bạn";
+    Layout = "~/Areas/HocSinh/Views/Shared/_LayoutHocSinh.cshtml";
+}
+
+<h2>Lịch Trình Của Bạn</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Error"]
+    </div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Tài Khoản</th>
+                <th>Quyền</th>
+                <th>Họ Tên</th>
+                <th>Tuyến Đường</th>
+                <th>Thời Gian</th>
+                <th>Ngày</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Username</td>
+                    <td>@item.Role</td>
+                    <td>@item.HoTen</td>
+                    <td>@item.TenTuyenDuong</td>
+                    <td>@item.ThoiGian</td>
+                    <td>@item.Ngay</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Phân trang -->
+    <div class="pagination">
+        <p>Trang @ViewBag.CurrentPage / @ViewBag.TotalPages (Tổng: @ViewBag.TotalRecords lịch trình)</p>
+        <div>
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <a href="@Url.Action("LichTrinhCuaBan", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })" class="btn btn-primary">Trang trước</a>
+            }
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <a href="@Url.Action("LichTrinhCuaBan", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })" class="btn btn-primary">Trang sau</a>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>Không có lịch trình nào để hiển thị.</p>
+}
+
+<a href="@Url.Action("Index", "Home", new { area = "HocSinh" })" class="btn btn-secondary">Quay lại</a>

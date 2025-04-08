@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using WebBus.Models
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -65,16 +66,26 @@
                     <div class="navigation-bar d-flex flex-wrap align-items-center">
                         <nav>
                             <ul>
-                                <li><a class="active" href="/HocSinh/Home/Index" title="">Trang Chủ</a></li>
-                                <li><a href="/HocSinh/Home/ThongTin" title="">Xe Bus</a></li>
-                                <li><a href="/HocSinh/TuyenSinh/ListTuyenSinh" title="">Lịch Trình</a></li>
-                                <li>
-                                    <a href="/HocSinh/TimKiem/TrangTimKiem" title="">Đăng Nhập</a><ul>
-                                        <li><a href="/HocSinh/TimKiem/TrangTimKiem" title="">Tra Cứu Nguyện Vọng</a></li>
-                                        <li><a href="/HocSinh/TimKiem/TrangTimKiem" title="">Tra Cứu Điểm</a></li>
-                                        <li><a href="/HocSinh/TimKiem/TrangTimKiem" title="">Đăng Xuất</a></li>
-                                    </ul>
-                                </li>
+                                <li><a class="active" href="/Student/Home/Index" title="">Trang Chủ</a></li>
+                                @*<li><a href="/Student/Home/ThongTin" title="">Xe Bus</a></li>
+                                    <li><a href="/Student/TuyenSinh/ListTuyenSinh" title="">Lịch Trình</a></li>*@
+                                @if (Session["HocSinh"] == null)
+                                {
+                                    <li>
+                                        <a href="/Auth/Account/Login" title="" style="color: #f37335">Đăng Nhập</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    var user = (WebBus.Models.User)Session["HocSinh"];
+                                    <li><a href="@Url.Action("LichTrinhCuaBan", "LichTrinh", new { area = "HocSinh", userId = user.Id })" title="">Lịch Trình Của Bạn</a></li>
+                                    <li>
+                                        <a href="#" title="">Xin Chào: @user.username</a>
+                                        <ul>
+                                            <li><a href="~/Auth/Account/DangXuatHocSinh" title="" style="color: #f37335">Đăng Xuất</a></li>
+                                        </ul>
+                                    </li>
+                                }
                             </ul>
                         </nav>
                         <!--Liên kết fb-->

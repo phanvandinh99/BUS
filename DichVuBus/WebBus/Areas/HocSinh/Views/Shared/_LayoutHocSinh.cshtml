@@ -65,31 +65,22 @@
                     <nav>
                         <ul>
                             <li><a class="active" href="/Student/Home/Index" title="">Trang Chủ</a></li>
-                            <li><a href="/Student/Home/ThongTin" title="">Thông Tin</a></li>
-                            <li><a href="/Student/TuyenSinh/ListTuyenSinh" title="">Tuyển Sinh</a></li>
-                            <li>
-                                <a href="/Student/TimKiem/TrangTimKiem" title="">Tra Cứu</a><ul>
-                                    <li><a href="/Student/TimKiem/TrangTimKiem" title="">Tra Cứu Nguyện Vọng</a></li>
-                                    <li><a href="/Student/TimKiem/TrangTimKiem" title="">Tra Cứu Điểm</a></li>
-                                    <li><a href="/Student/TimKiem/TrangTimKiem" title="">Tra Cứu Phòng Thi</a></li>
-                                </ul>
-                            </li>
-                            @if (Session["TaiKhoanHS"] == null)
+                            @*<li><a href="/Student/Home/ThongTin" title="">Xe Bus</a></li>
+                                <li><a href="/Student/TuyenSinh/ListTuyenSinh" title="">Lịch Trình</a></li>*@
+                            @if (Session["HocSinh"] == null)
                             {
                                 <li>
-                                    <a href="/Student/DangNhap/TrangDangNhap" title="" style="color: #f37335">Đăng Nhập</a>
+                                    <a href="/Auth/Account/Login" title="" style="color: #f37335">Đăng Nhập</a>
                                 </li>
                             }
                             else
                             {
-                                HocSinh hs = (HocSinh)Session["TaiKhoanHS"];
+                                var user = (WebBus.Models.User)Session["HocSinh"];
+                                <li><a href="@Url.Action("LichTrinhCuaBan", "LichTrinh", new { area = "HocSinh", userId = user.Id })" title="">Lịch Trình Của Bạn</a></li>
                                 <li>
-                                    <a href="#" title="">Xin Chào: @hs.hoTen</a><ul>
-                                        <li><a href="/Student/HocSinh/CapNhatThongTinCaNhan?sMaHocSinh=@hs.Id" title="">Đổi mật khẩu</a></li>
-                                        <li><a href="/Student/HocSinh/NguyenVong?smaHocSinh=@hs.Id" title="">Nguyện Vọng</a></li>
-                                        <li><a href="/Student/HocSinh/DiemThi?sMaHocSinh=@hs.Id" title="">Điểm Thi</a></li>
-                                        <li><a href="/Student/HocSinh/PhongThi?sMaHocSinh=@hs.Id" title="">Phòng Thi</a></li>
-                                        <li><a href="~/Student/DangNhap/DangXuat" title="" style="color: #f37335">Đăng Xuất</a></li>
+                                    <a href="#" title="">Xin Chào: @user.username</a>
+                                    <ul>
+                                        <li><a href="~/Auth/Account/DangXuatHocSinh" title="" style="color: #f37335">Đăng Xuất</a></li>
                                     </ul>
                                 </li>
                             }

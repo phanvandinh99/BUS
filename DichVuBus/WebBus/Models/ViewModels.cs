@@ -33,5 +33,16 @@ namespace WebBus.Models
             public string thoiGian { get; set; }
             public string ngay { get; set; }
         }
+
+        public class UserLichTrinhViewModel
+        {
+            public string UserId { get; set; }
+            public string Username { get; set; }
+            public string Role { get; set; }
+            public string HoTen { get; set; } // Từ HocSinh
+            public string TenTuyenDuong { get; set; } // Từ TuyenDuong
+            public string ThoiGian { get; set; } // Từ LichTrinh
+            public string Ngay { get; set; } // Từ LichTrinh
+        }
     }
 }
