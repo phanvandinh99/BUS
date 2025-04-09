@@ -61,11 +61,11 @@ namespace WebBus.Areas.HocSinh.Controllers
                     return RedirectToAction("Index");
                 }
 
-                // Kiểm tra xem học sinh đã tham gia tuyến đường nào chưa
-                var existingHocSinh = _context.HocSinh.Find(h => h.userId == user.Id).FirstOrDefault();
+                // Kiểm tra xem học sinh đã tham gia tuyến đường NÀY chưa
+                var existingHocSinh = _context.HocSinh.Find(h => h.userId == user.Id && h.tuyenDuongId == tuyenDuongId).FirstOrDefault();
                 if (existingHocSinh != null)
                 {
-                    TempData["Error"] = "Bạn đã tham gia một tuyến đường khác.";
+                    TempData["Error"] = "Bạn đã tham gia tuyến đường này rồi.";
                     return RedirectToAction("Index");
                 }
 

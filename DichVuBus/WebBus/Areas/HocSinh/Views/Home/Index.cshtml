@@ -68,7 +68,7 @@
                             <ul>
                                 <li><a class="active" href="/Student/Home/Index" title="">Trang Chủ</a></li>
                                 @*<li><a href="/Student/Home/ThongTin" title="">Xe Bus</a></li>
-                                    <li><a href="/Student/TuyenSinh/ListTuyenSinh" title="">Lịch Trình</a></li>*@
+                                <li><a href="/Student/TuyenSinh/ListTuyenSinh" title="">Lịch Trình</a></li>*@
                                 @if (Session["HocSinh"] == null)
                                 {
                                     <li>
@@ -278,6 +278,14 @@
                     <h2>Danh Sách Tuyến Đường</h2>
                     <p>Các tuyến đường hiện có trong hệ thống</p>
                 </div>
+                <!-- Hiển thị thông báo lỗi nếu có -->
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @TempData["Error"]
+                    </div>
+                }
+
                 <div class="row">
                     @if (Session["HocSinh"] != null)
                     {

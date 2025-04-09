@@ -20,37 +20,56 @@ namespace WebBus.Areas.HocSinh.Controllers
         {
             try
             {
-                // Sử dụng aggregation pipeline
-                var pipeline = _context.Users.Aggregate()
-                    .Match(u => u.Id == userId)
-                    .Lookup("HocSinh", "Id", "userId", "HocSinh") // Join với HocSinh
-                    .Unwind("HocSinh") // Mở rộng mảng HocSinh
-                    .Lookup("TuyenDuong", "HocSinh.tuyenDuongId", "_id", "TuyenDuong") // Join với TuyenDuong
-                    .Unwind("TuyenDuong") // Mở rộng mảng TuyenDuong
-                    .Lookup("LichTrinh", "TuyenDuong._id", "tuyenDuongId", "LichTrinh") // Join với LichTrinh
-                    .Unwind("LichTrinh") // Mở rộng mảng LichTrinh
-                    .Project<UserLichTrinhViewModel>(Builders<BsonDocument>.Projection
-                        .Include("Id")           // UserId
-                        .Include("username")     // Username
-                        .Include("role")         // Role
-                        .Include("HocSinh.hoTen") // HoTen
-                        .Include("TuyenDuong.tenTuyen") // TenTuyenDuong
-                        .Include("LichTrinh.thoiGian")  // ThoiGian
-                        .Include("LichTrinh.ngay"));    // Ngay
-
-                // Debug: Kiểm tra kết quả pipeline
-                var result = pipeline.ToList();
-                if (result.Count == 0)
+                if (string.IsNullOrEmpty(userId))
                 {
-                    TempData["Error"] = "Không tìm thấy dữ liệu lịch trình nào.";
+                    TempData["Error"] = "Không xác định được người dùng.";
                     return View(new List<UserLichTrinhViewModel>());
                 }
 
-                // Lấy tổng số bản ghi
-                var totalRecords = result.Count;
+                var user = _context.Users.Find(u => u.Id == userId).FirstOrDefault();
+                if (user == null)
+                {
+                    TempData["Error"] = "Không tìm thấy người dùng với userId: " + userId;
+                    return View(new List<UserLichTrinhViewModel>());
+                }
 
-                // Phân trang
-                var pagedList = result
+                var hocSinh = _context.HocSinh.Find(h => h.userId == userId).FirstOrDefault();
+                if (hocSinh == null)
+                {
+                    TempData["Error"] = "Bạn chưa tham gia tuyến đường nào với userId: " + userId;
+                    return View(new List<UserLichTrinhViewModel>());
+                }
+
+                var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == hocSinh.tuyenDuongId).FirstOrDefault();
+                if (tuyenDuong == null)
+                {
+                    TempData["Error"] = "Không tìm thấy tuyến đường với tuyenDuongId: " + hocSinh.tuyenDuongId;
+                    return View(new List<UserLichTrinhViewModel>());
+                }
+
+                // Debug giá trị tuyenDuong.Id
+                Console.WriteLine("tuyenDuong.Id: " + tuyenDuong.Id);
+                var lichTrinhList = _context.LichTrinh.Find(l => l.tuyenDuongId == tuyenDuong.Id).ToList();
+                Console.WriteLine("lichTrinhList count: " + lichTrinhList.Count);
+                if (!lichTrinhList.Any())
+                {
+                    TempData["Error"] = "Không có lịch trình nào cho tuyến đường với tuyenDuongId: " + tuyenDuong.Id;
+                    return View(new List<UserLichTrinhViewModel>());
+                }
+
+                var viewModelList = lichTrinhList.Select(l => new UserLichTrinhViewModel
+                {
+                    UserId = user.Id,
+                    Username = user.username,
+                    Role = user.role,
+                    HoTen = hocSinh.hoTen,
+                    TenTuyenDuong = tuyenDuong.tenTuyen,
+                    ThoiGian = l.thoiGian,
+                    Ngay = l.ngay
+                }).ToList();
+
+                var totalRecords = viewModelList.Count;
+                var pagedList = viewModelList
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
@@ -64,8 +83,8 @@ namespace WebBus.Areas.HocSinh.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = "Đã xảy ra lỗi khi tải danh sách người dùng đăng ký lịch trình: " + ex.Message;
-                return RedirectToAction("Index");
+                TempData["Error"] = "Đã xảy ra lỗi: " + ex.Message;
+                return View(new List<UserLichTrinhViewModel>());
             }
         }
         #endregion
