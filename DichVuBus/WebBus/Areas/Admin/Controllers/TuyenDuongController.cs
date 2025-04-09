@@ -45,7 +45,11 @@ namespace WebBus.Areas.Admin.Controllers
         #region Thêm mới tuyến đường
         public ActionResult Create()
         {
-            ViewBag.XeBusList = _context.XeBus.Find(_ => true).ToList();
+            var filter = Builders<XeBus>.Filter
+                .Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Bảo Trì"))
+                & Builders<XeBus>.Filter.Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Ngừng hoạt động"));
+
+            ViewBag.XeBusList = _context.XeBus.Find(filter).ToList();
             return View();
         }
 
@@ -57,7 +61,11 @@ namespace WebBus.Areas.Admin.Controllers
                 _context.TuyenDuong.InsertOne(tuyenDuong);
                 return RedirectToAction("Index");
             }
-            ViewBag.XeBusList = _context.XeBus.Find(_ => true).ToList();
+            var filter = Builders<XeBus>.Filter
+                        .Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Bảo Trì"))
+                        & Builders<XeBus>.Filter.Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Ngừng hoạt động"));
+
+            ViewBag.XeBusList = _context.XeBus.Find(filter).ToList();
             return View(tuyenDuong);
         }
         #endregion
@@ -67,7 +75,11 @@ namespace WebBus.Areas.Admin.Controllers
         {
             var tuyenDuong = _context.TuyenDuong.Find(t => t.Id == id).FirstOrDefault();
             if (tuyenDuong == null) return HttpNotFound();
-            ViewBag.XeBusList = _context.XeBus.Find(_ => true).ToList();
+            var filter = Builders<XeBus>.Filter
+              .Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Bảo Trì"))
+              & Builders<XeBus>.Filter.Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Ngừng hoạt động"));
+
+            ViewBag.XeBusList = _context.XeBus.Find(filter).ToList();
             return View(tuyenDuong);
         }
 
@@ -79,7 +91,12 @@ namespace WebBus.Areas.Admin.Controllers
                 _context.TuyenDuong.ReplaceOne(t => t.Id == tuyenDuong.Id, tuyenDuong);
                 return RedirectToAction("Index");
             }
-            ViewBag.XeBusList = _context.XeBus.Find(_ => true).ToList();
+            var filter = Builders<XeBus>.Filter
+            .Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Bảo Trì"))
+            & Builders<XeBus>.Filter.Not(Builders<XeBus>.Filter.Eq(x => x.trangThai, "Ngừng hoạt động"));
+
+            ViewBag.XeBusList = _context.XeBus.Find(filter).ToList();
+
             return View(tuyenDuong);
         }
         #endregion
