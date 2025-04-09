@@ -68,7 +68,7 @@
                             <ul>
                                 <li><a class="active" href="/Student/Home/Index" title="">Trang Chủ</a></li>
                                 @*<li><a href="/Student/Home/ThongTin" title="">Xe Bus</a></li>
-                                <li><a href="/Student/TuyenSinh/ListTuyenSinh" title="">Lịch Trình</a></li>*@
+                                    <li><a href="/Student/TuyenSinh/ListTuyenSinh" title="">Lịch Trình</a></li>*@
                                 @if (Session["HocSinh"] == null)
                                 {
                                     <li>
@@ -271,7 +271,6 @@
         </section>
         <!--course-section end-->
         <!-- Danh sách tuyến đường -->
-        <!-- Danh sách tuyến đường -->
         <section class="tuyen-duong-section">
             <div class="container">
                 <div class="section-title text-center">
@@ -290,21 +289,25 @@
                     @if (Session["HocSinh"] != null)
                     {
                         var user = (WebBus.Models.User)Session["HocSinh"];
-                        <!-- Form chọn tuyến đường để tham gia -->
-                        using (Html.BeginForm("ThamGiaTuyenDuong", "Home", new { area = "HocSinh" }, FormMethod.Post, new { @class = "form-tham-gia" }))
+
+                        foreach (var tuyen in ViewBag.TuyenDuongList)
                         {
-                            @Html.AntiForgeryToken()
-                            <div class="form-group">
-                                <label for="tuyenDuongId">Chọn tuyến đường để tham gia:</label>
-                                <select name="tuyenDuongId" class="form-control">
-                                    <option value="">-- Chọn tuyến đường --</option>
-                                    @foreach (var tuyen in ViewBag.TuyenDuongList)
-                                    {
-                                        <option value="@tuyen.Id">@tuyen.tenTuyen</option>
-                                    }
-                                </select>
+                            <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@tuyen.tenTuyen</h5>
+                                        <p class="card-text">Xe Buýt: @tuyen.bienSoXe</p>
+
+                                        <!-- Form tham gia tuyến đường -->
+                                        @using (Html.BeginForm("ThamGiaTuyenDuong", "Home", new { area = "HocSinh" }, FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input name="tuyenDuongId" type="hidden" value="@tuyen.Id" />
+                                            <button type="submit" class="btn btn-primary btn-sm">Tham Gia Tuyến</button>
+                                        }
+                                    </div>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-success">Tham Gia</button>
                         }
                     }
                     else
@@ -312,19 +315,7 @@
                         <p>Vui lòng <a href="/Auth/Account/Login">đăng nhập</a> để tham gia tuyến đường.</p>
                     }
                 </div>
-                <hr />
-                <div class="row">
-                    <!-- Danh sách tuyến đường -->
-                    @foreach (var tuyen in ViewBag.TuyenDuongList)
-                    {
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="tuyen-duong-card wow fadeInUp" data-wow-duration="1000ms">
-                                <h3>@tuyen.tenTuyen</h3>
-                                <p>Xe Buýt: @tuyen.bienSoXe</p>
-                            </div>
-                        </div>
-                    }
-                </div>
+
             </div>
         </section>
         <br />

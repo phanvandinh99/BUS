@@ -10,6 +10,7 @@
         <section class="main-banner">
             <div class="container">
                 <h2>Lịch Trình Của Bạn</h2>
+                <br />
                 <div class="row align-items-center">
 
                     @if (TempData["Error"] != null)
@@ -81,8 +82,6 @@
                     {
                         <p>Không có lịch trình nào để hiển thị.</p>
                     }
-
-                    <a href="@Url.Action("Index", "Home", new { area = "HocSinh" })" class="btn btn-secondary">Quay lại</a>
                 </div>
             </div>
         </section>
