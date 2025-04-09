@@ -42,17 +42,24 @@ namespace WebBus.Areas.Admin.Controllers
             return View(hocSinhViewModel);
         }
         #endregion
+
         #region Thêm mới học sinh
         public ActionResult Create()
         {
             // Load danh sách tuyến đường
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
+
+            // Lấy danh sách tất cả userId đã được sử dụng trong HocSinh
+            var usedUserIds = _context.HocSinh.Find(_ => true).ToList().Select(h => h.userId).ToList();
+
+            // Lấy danh sách Users có role "HocSinh" và chưa được sử dụng
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id)).ToList();
+
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] // Thêm bảo mật
+        [ValidateAntiForgeryToken]
         public ActionResult Create(WebBus.Models.HocSinh hocSinh)
         {
             if (ModelState.IsValid)
@@ -62,7 +69,8 @@ namespace WebBus.Areas.Admin.Controllers
             }
             // Load lại danh sách nếu form không hợp lệ
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
+            var usedUserIds = _context.HocSinh.Find(_ => true).ToList().Select(h => h.userId).ToList();
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id)).ToList();
             return View(hocSinh);
         }
         #endregion
@@ -72,14 +80,21 @@ namespace WebBus.Areas.Admin.Controllers
         {
             var hocSinh = _context.HocSinh.Find(h => h.Id == id).FirstOrDefault();
             if (hocSinh == null) return HttpNotFound();
+
+            // Load danh sách tuyến đường
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            // Load danh sách người dùng không phải Admin
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
+
+            // Lấy danh sách tất cả userId đã được sử dụng trong HocSinh, trừ học sinh hiện tại
+            var usedUserIds = _context.HocSinh.Find(h => h.Id != id).ToList().Select(h => h.userId).ToList();
+
+            // Lấy danh sách Users có role "HocSinh" và (chưa được sử dụng hoặc là userId hiện tại)
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && (!usedUserIds.Contains(u.Id) || u.Id == hocSinh.userId)).ToList();
+
             return View(hocSinh);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] // Thêm bảo mật
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(WebBus.Models.HocSinh hocSinh)
         {
             if (ModelState.IsValid)
@@ -89,7 +104,8 @@ namespace WebBus.Areas.Admin.Controllers
             }
             // Load lại danh sách nếu form không hợp lệ
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
+            var usedUserIds = _context.HocSinh.Find(h => h.Id != hocSinh.Id).ToList().Select(h => h.userId).ToList();
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && (!usedUserIds.Contains(u.Id) || u.Id == hocSinh.userId)).ToList();
             return View(hocSinh);
         }
         #endregion
