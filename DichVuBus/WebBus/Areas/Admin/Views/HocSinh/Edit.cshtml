@@ -8,22 +8,28 @@
 <h2>Cập nhật Học Sinh</h2>
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken() <!-- Thêm token bảo mật -->
     @Html.HiddenFor(m => m.Id)
+
     <div class="form-group">
         <label>Họ Tên</label>
         @Html.TextBoxFor(m => m.hoTen, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.hoTen, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         <label>Lớp</label>
         @Html.TextBoxFor(m => m.lop, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.lop, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         <label>Tuyến Đường</label>
-        @Html.DropDownListFor(m => m.tuyenDuongId, new SelectList(ViewBag.TuyenDuongList, "Id", "TenTuyen"), "Chọn tuyến đường", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.tuyenDuongId, new SelectList(ViewBag.TuyenDuongList, "Id", "tenTuyen"), "Chọn tuyến đường", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.tuyenDuongId, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
         <label>Tài Khoản</label>
-        @Html.TextBoxFor(m => m.userId, new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.userId, new SelectList(ViewBag.UserList, "Id", "username", Model?.userId), "Chọn tài khoản", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.userId, "", new { @class = "text-danger" })
     </div>
     <button type="submit" class="btn btn-primary">Cập nhật</button>
 }

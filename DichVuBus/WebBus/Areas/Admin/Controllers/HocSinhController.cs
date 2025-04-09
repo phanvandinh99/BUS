@@ -42,15 +42,17 @@ namespace WebBus.Areas.Admin.Controllers
             return View(hocSinhViewModel);
         }
         #endregion
-
         #region Thêm mới học sinh
         public ActionResult Create()
         {
+            // Load danh sách tuyến đường
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] // Thêm bảo mật
         public ActionResult Create(WebBus.Models.HocSinh hocSinh)
         {
             if (ModelState.IsValid)
@@ -58,7 +60,9 @@ namespace WebBus.Areas.Admin.Controllers
                 _context.HocSinh.InsertOne(hocSinh);
                 return RedirectToAction("Index");
             }
+            // Load lại danh sách nếu form không hợp lệ
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
             return View(hocSinh);
         }
         #endregion
@@ -69,10 +73,13 @@ namespace WebBus.Areas.Admin.Controllers
             var hocSinh = _context.HocSinh.Find(h => h.Id == id).FirstOrDefault();
             if (hocSinh == null) return HttpNotFound();
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
+            // Load danh sách người dùng không phải Admin
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
             return View(hocSinh);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken] // Thêm bảo mật
         public ActionResult Edit(WebBus.Models.HocSinh hocSinh)
         {
             if (ModelState.IsValid)
@@ -80,7 +87,9 @@ namespace WebBus.Areas.Admin.Controllers
                 _context.HocSinh.ReplaceOne(h => h.Id == hocSinh.Id, hocSinh);
                 return RedirectToAction("Index");
             }
+            // Load lại danh sách nếu form không hợp lệ
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
+            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh").ToList();
             return View(hocSinh);
         }
         #endregion
