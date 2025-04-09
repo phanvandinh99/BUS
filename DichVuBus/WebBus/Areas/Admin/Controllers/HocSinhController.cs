@@ -49,11 +49,17 @@ namespace WebBus.Areas.Admin.Controllers
             // Load danh sách tuyến đường
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
 
-            // Lấy danh sách tất cả userId đã được sử dụng trong HocSinh
-            var usedUserIds = _context.HocSinh.Find(_ => true).ToList().Select(h => h.userId).ToList();
+            // Lấy danh sách userId đã sử dụng trong bảng HocSinh
+            var usedUserIds = _context.HocSinh
+                .Find(_ => true)
+                .Project(h => h.userId)
+                .ToList()
+                .ToHashSet();
 
-            // Lấy danh sách Users có role "HocSinh" và chưa được sử dụng
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id)).ToList();
+            // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
+            var availableUsers = _context.Users
+                .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
+                .ToList();
 
             return View();
         }
@@ -69,8 +75,17 @@ namespace WebBus.Areas.Admin.Controllers
             }
             // Load lại danh sách nếu form không hợp lệ
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            var usedUserIds = _context.HocSinh.Find(_ => true).ToList().Select(h => h.userId).ToList();
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id)).ToList();
+            // Lấy danh sách userId đã sử dụng trong bảng HocSinh
+            var usedUserIds = _context.HocSinh
+                .Find(_ => true)
+                .Project(h => h.userId)
+                .ToList()
+                .ToHashSet();
+
+            // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
+            var availableUsers = _context.Users
+                .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
+                .ToList();
             return View(hocSinh);
         }
         #endregion
@@ -84,11 +99,17 @@ namespace WebBus.Areas.Admin.Controllers
             // Load danh sách tuyến đường
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
 
-            // Lấy danh sách tất cả userId đã được sử dụng trong HocSinh, trừ học sinh hiện tại
-            var usedUserIds = _context.HocSinh.Find(h => h.Id != id).ToList().Select(h => h.userId).ToList();
+            // Lấy danh sách userId đã sử dụng trong bảng HocSinh
+            var usedUserIds = _context.HocSinh
+                .Find(_ => true)
+                .Project(h => h.userId)
+                .ToList()
+                .ToHashSet();
 
-            // Lấy danh sách Users có role "HocSinh" và (chưa được sử dụng hoặc là userId hiện tại)
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && (!usedUserIds.Contains(u.Id) || u.Id == hocSinh.userId)).ToList();
+            // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
+            var availableUsers = _context.Users
+                .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
+                .ToList();
 
             return View(hocSinh);
         }
@@ -104,8 +125,17 @@ namespace WebBus.Areas.Admin.Controllers
             }
             // Load lại danh sách nếu form không hợp lệ
             ViewBag.TuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList();
-            var usedUserIds = _context.HocSinh.Find(h => h.Id != hocSinh.Id).ToList().Select(h => h.userId).ToList();
-            ViewBag.UserList = _context.Users.Find(u => u.role == "HocSinh" && (!usedUserIds.Contains(u.Id) || u.Id == hocSinh.userId)).ToList();
+            // Lấy danh sách userId đã sử dụng trong bảng HocSinh
+            var usedUserIds = _context.HocSinh
+                .Find(_ => true)
+                .Project(h => h.userId)
+                .ToList()
+                .ToHashSet();
+
+            // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
+            var availableUsers = _context.Users
+                .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
+                .ToList();
             return View(hocSinh);
         }
         #endregion
