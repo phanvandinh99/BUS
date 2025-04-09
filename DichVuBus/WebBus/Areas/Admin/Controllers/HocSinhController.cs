@@ -57,7 +57,7 @@ namespace WebBus.Areas.Admin.Controllers
                 .ToHashSet();
 
             // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
-            var availableUsers = _context.Users
+            ViewBag.UserList = _context.Users
                 .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
                 .ToList();
 
@@ -83,9 +83,10 @@ namespace WebBus.Areas.Admin.Controllers
                 .ToHashSet();
 
             // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
-            var availableUsers = _context.Users
+            ViewBag.UserList = _context.Users
                 .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
                 .ToList();
+
             return View(hocSinh);
         }
         #endregion
@@ -107,7 +108,7 @@ namespace WebBus.Areas.Admin.Controllers
                 .ToHashSet();
 
             // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
-            var availableUsers = _context.Users
+            ViewBag.UserList = _context.Users
                 .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
                 .ToList();
 
@@ -133,7 +134,7 @@ namespace WebBus.Areas.Admin.Controllers
                 .ToHashSet();
 
             // Lấy danh sách Users có role "HocSinh" và userId chưa có trong HocSinh
-            var availableUsers = _context.Users
+            ViewBag.UserList = _context.Users
                 .Find(u => u.role == "HocSinh" && !usedUserIds.Contains(u.Id))
                 .ToList();
             return View(hocSinh);

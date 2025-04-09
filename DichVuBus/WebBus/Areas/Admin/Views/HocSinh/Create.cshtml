@@ -23,12 +23,15 @@
     <div class="form-group">
         <label>Tuyến Đường</label>
         @Html.DropDownListFor(m => m.tuyenDuongId, new SelectList(ViewBag.TuyenDuongList, "Id", "tenTuyen"), "Chọn tuyến đường", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.tuyenDuongId, "", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.tuyenDuongId, "", new { @class    = "text-danger" })
     </div>
-    <div class="form-group">
-        <label>Tài Khoản</label>
-        @Html.DropDownListFor(m => m.userId, new SelectList(ViewBag.UserList, "Id", "username"), "Chọn tài khoản", new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.userId, "", new { @class = "text-danger" })
-    </div>
+    if (null != ViewBag.UserList)
+    {
+        <div class="form-group">
+            <label>Tài Khoản</label>
+            @Html.DropDownListFor(m => m.userId, new SelectList(ViewBag.UserList, "Id", "username"), "Chọn tài khoản", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.userId, "", new { @class = "text-danger" })
+        </div>
+    }
     <button type="submit" class="btn btn-primary">Thêm</button>
 }
