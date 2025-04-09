@@ -23,6 +23,7 @@ namespace WebBus.Models
             public string tenTuyen { get; set; }
             public string xeBusId { get; set; }
             public string bienSoXe { get; set; }
+            public List<LichTrinhViewModel> LichTrinhs { get; set; }
         }
 
         public class LichTrinhViewModel

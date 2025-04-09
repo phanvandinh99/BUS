@@ -15,12 +15,22 @@ namespace WebBus.Areas.HocSinh.Controllers
         {
             // Lấy danh sách tuyến đường và xe buýt để hiển thị
             var tuyenDuongList = _context.TuyenDuong.Find(_ => true).ToList()
-                .Select(t => new TuyenDuongViewModel
-                {
-                    Id = t.Id,
-                    tenTuyen = t.tenTuyen,
-                    bienSoXe = _context.XeBus.Find(x => x.Id == t.xeBusId).FirstOrDefault()?.bienSo ?? "Chưa có xe"
-                });
+                    .Select(t => new TuyenDuongViewModel
+                    {
+                        Id = t.Id,
+                        tenTuyen = t.tenTuyen,
+                        xeBusId = t.xeBusId,
+                        bienSoXe = _context.XeBus.Find(x => x.Id == t.xeBusId).FirstOrDefault()?.bienSo ?? "Chưa có xe",
+                        LichTrinhs = _context.LichTrinh.Find(l => l.tuyenDuongId == t.Id).ToList()
+                            .Select(l => new LichTrinhViewModel
+                            {
+                                Id = l.Id,
+                                tuyenDuongId = l.tuyenDuongId,
+                                thoiGian = l.thoiGian,
+                                ngay = l.ngay
+                            }).ToList()
+                    }).ToList();
+
             ViewBag.TuyenDuongList = tuyenDuongList;
 
             var xeBusList = _context.XeBus.Find(_ => true).ToList();

@@ -297,6 +297,13 @@
                                     <div class="card-body">
                                         <h5 class="card-title">@tuyen.tenTuyen</h5>
                                         <p class="card-text">Xe Buýt: @tuyen.bienSoXe</p>
+                                        @if (tuyen.LichTrinhs != null)
+                                        {
+                                            foreach (var lichTrinh in tuyen.LichTrinhs)
+                                            {
+                                                <p class="card-text">Thời Gian: @lichTrinh.thoiGian - @lichTrinh.ngay</p>
+                                            }
+                                        }
 
                                         <!-- Form tham gia tuyến đường -->
                                         @using (Html.BeginForm("ThamGiaTuyenDuong", "Home", new { area = "HocSinh" }, FormMethod.Post))
@@ -329,10 +336,12 @@
                 <div class="row">
                     @foreach (var xe in ViewBag.XeBusList)
                     {
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="xe-bus-card wow fadeInUp" data-wow-duration="1000ms">
-                                <h3>@xe.bienSo</h3>
-                                <p>Trạng Thái: @xe.trangThai</p>
+                        <div class="col-lg-4 col-md-6 col-sm-6 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h3>@xe.bienSo</h3>
+                                    <p>Trạng Thái: @xe.trangThai</p>
+                                </div>
                             </div>
                         </div>
                     }
@@ -340,6 +349,7 @@
             </div>
         </section>
 
+        <br>
         <footer>
             <div class="container">
                 <div class="top-footer">
