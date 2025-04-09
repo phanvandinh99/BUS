@@ -89,10 +89,43 @@ namespace WebBus.Areas.HocSinh.Controllers
         }
         #endregion
 
-        // GET: HocSinh/LichTrinh
-        public ActionResult Index()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HuyLichTrinh(string userId)
         {
-            return View();
+            try
+            {
+                // Kiểm tra userId hợp lệ
+                if (string.IsNullOrEmpty(userId))
+                {
+                    TempData["Error"] = "Không xác định được người dùng.";
+                    return RedirectToAction("LichTrinhCuaBan", new { userId });
+                }
+
+                // Kiểm tra xem học sinh có tồn tại không
+                var hocSinh = _context.HocSinh.Find(h => h.userId == userId).FirstOrDefault();
+                if (hocSinh == null)
+                {
+                    TempData["Error"] = "Bạn chưa tham gia tuyến đường nào.";
+                    return RedirectToAction("LichTrinhCuaBan", new { userId });
+                }
+
+                // Xóa bản ghi học sinh khỏi collection HocSinh
+                var result = _context.HocSinh.DeleteOne(h => h.userId == userId);
+                if (result.DeletedCount == 0)
+                {
+                    TempData["Error"] = "Không thể hủy lịch trình. Vui lòng thử lại.";
+                    return RedirectToAction("LichTrinhCuaBan", new { userId });
+                }
+
+                TempData["Success"] = "Đã hủy lịch trình thành công!";
+                return RedirectToAction("LichTrinhCuaBan", new { userId });
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Đã xảy ra lỗi khi hủy lịch trình: " + ex.Message;
+                return RedirectToAction("LichTrinhCuaBan", new { userId });
+            }
         }
     }
 }

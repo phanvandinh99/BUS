@@ -5,7 +5,6 @@
     Layout = "~/Areas/HocSinh/Views/Shared/_LayoutHocSinh.cshtml";
 }
 
-
 <div class="wrapper">
     <div class="main-section">
         <section class="main-banner">
@@ -20,6 +19,13 @@
                         </div>
                     }
 
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            @TempData["Success"]
+                        </div>
+                    }
+
                     @if (Model != null && Model.Any())
                     {
                         <table class="table table-bordered table-striped">
@@ -31,6 +37,7 @@
                                     <th>Tuyến Đường</th>
                                     <th>Thời Gian</th>
                                     <th>Ngày</th>
+                                    <th>Hành động</th> <!-- Thêm cột Hành động -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,6 +50,13 @@
                                         <td>@item.TenTuyenDuong</td>
                                         <td>@item.ThoiGian</td>
                                         <td>@item.Ngay</td>
+                                        <td>
+                                            <form method="post" action="@Url.Action("HuyLichTrinh")" style="display:inline;">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="userId" value="@item.UserId" />
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn hủy lịch trình này không?');">Hủy</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
